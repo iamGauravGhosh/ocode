@@ -1,6 +1,7 @@
 import { StyleSheet, Text, type TextProps } from 'react-native';
 
 import { useThemeColor } from '@/hooks/use-theme-color';
+import { useFont } from '@/contexts/font-context';
 
 export type ThemedTextProps = TextProps & {
   lightColor?: string;
@@ -16,11 +17,12 @@ export function ThemedText({
   ...rest
 }: ThemedTextProps) {
   const color = useThemeColor({ light: lightColor, dark: darkColor }, 'text');
+  const { getFontFamily } = useFont();
 
   return (
     <Text
       style={[
-        { color },
+        { color, fontFamily: getFontFamily() },
         type === 'default' ? styles.default : undefined,
         type === 'title' ? styles.title : undefined,
         type === 'defaultSemiBold' ? styles.defaultSemiBold : undefined,
